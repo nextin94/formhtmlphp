@@ -1,0 +1,23 @@
+<?php
+
+$name = strip_tags($_POST['name']);
+$age = preg_replace('/[^\d]/', '', strip_tags($_POST['age']));
+$message = strip_tags($_POST['message']);
+
+if (($age > 150 or $age < 0) and !empty($_POST['age'])) echo "Вы не корректно указали возрость"."<br>";
+
+if (!empty($_POST['name']) and !empty($_POST['age'])) {
+    echo "Salom $age yoshli $name! Sizning xabaringiz: $message";
+} else {
+?> 
+
+<form action="" method="POSt">
+<?php if (isset($_POST['name']) and empty($_POST['name'])) echo "Введите имя"."<br>";  ?>
+<input type="text" name="name" placeholder="Введите имя"><br><br>
+<?php if (isset($_POST['age']) and empty($_POST['age'])) echo "Введите возрость"."<br>";  ?>
+<input type="text" name='age' placeholder="Введите возрость"><br><br>
+<textarea name="message" rows="10" cols="30">Сообщение</textarea><br><br>
+<input type="submit">
+</form>
+
+<?php } ?>
