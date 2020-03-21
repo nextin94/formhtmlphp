@@ -1,0 +1,33 @@
+<?php
+/*
+Form yordamida foydalanuvchidan yoshini va ismini so'rab undan kelgan 
+xabarni olamiz! Form yordamida foydalanuvchini ismini so'raganimizda 
+u html teglari yordamida kelgan qiymatni buzib qoyishi mumkin 
+shu sababli STRIP_TAGS funksiyasi yordamida uni o'chirib olamiz!
+*/
+$name = strip_tags($_POST['name']); // $name o'zgaruvchisiga POST metodidan kelgan qiymatni yozib olamiz va strip_tags orqali html teglarini o'chiramiz.
+$age = preg_replace('/[^\d]/', '', strip_tags($_POST['age'])); //$age o'zgaruvchisi orqali foydalanuvchini yoshini bilib olishimiz kerak, foydalanuvchi string yoki html teg yozib qoyishi mumkin, shu sababli biz html teglarini udalit qilib preg_replace orqali stringlarni bekor qilib faqat integerlarni olamiz
+$message = strip_tags($_POST['message']); // $message POST messagedan kelgan qiymat bunda xam html teglar o'chirilgan
+
+
+/** Agar $_POST['name]  bo'sh bo'lmasa yaniy o'zgaruvchi qiymatga ega bolsa hamda shu bilan bir qatorda $age o'zgaruvchisi xam qiymatga ega bo'lsa 
+* endi ikkinchi tenglik $age dan kelgan qiymat 150 dan kichkina va 0 dan katta bo'lganda echo funkisiyasi bajariladi;
+* agar ko'rsatilgan shartlardan birontasi bajarilmasa bizga form yana qaytib keladi
+*/
+if ((!empty($_POST['name']) and !empty($age)) and ($age < 150 and $age > 0)) { 
+    echo "Salom $age yoshli $name! Sizning xabaringiz: $message";
+} else {
+?> 
+
+<form action="" method="POSt">
+<?php if (isset($_POST['name']) and empty($_POST['name'])) echo "Введите имя"."<br>";  ?>
+<input type="text" name="name" placeholder="Введите имя"><br><br>
+<?php if (isset($_POST['age']) and empty($_POST['age'])) echo "Введите возрость"."<br>";  ?>
+<!-- Form yana qaytib kelganda shu tengsizlik bajariladi agar shu tengsizlik bajarilmasa bizga yoshingiz xato ko'rsatilgan deb ishora beradi -->
+<?php if (($age > 150 or $age < 0) and !empty($_POST['age'])) echo "Вы не корректно указали возрость"."<br>"; ?>
+<input type="text" name='age' placeholder="Введите возрость"><br><br>
+<textarea name="message" rows="10" cols="30">Сообщение</textarea><br><br>
+<input type="submit">
+</form>
+
+<?php } ?>
