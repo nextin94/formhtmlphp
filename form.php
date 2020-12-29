@@ -15,5 +15,5 @@ if (!empty($_POST['name']) and !empty($_POST['age'])) {
 <textarea name="message" rows="10" cols="30">Сообщение</textarea><br><br>
 <input type="submit">
 </form>
-
+hello world
 <?php } ?>
